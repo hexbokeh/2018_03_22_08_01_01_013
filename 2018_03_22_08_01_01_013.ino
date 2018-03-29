@@ -84,6 +84,9 @@ void checkCell()
     Serial.println(currentNote);
     //digitalWrite(ledSignal, HIGH);
     analogWrite(ledSignal, map(cellVal, darkValue, lightValue, 100, 255));
+    
+
+    // debug
     Serial.print("analog output: ");
     Serial.println(map(cellVal, darkValue, lightValue, 100, 255));
   }
