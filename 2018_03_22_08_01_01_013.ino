@@ -84,12 +84,13 @@ void checkCell()
   }
 }
 
+// my test light
 void checkBtn()
 {
   if (digitalRead(btn))
   {
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(ledPin, LOW); // darkness should increase likelihood of triggering note
   }
-  else digitalWrite(ledPin, LOW);
+  else digitalWrite(ledPin, HIGH); // light should likely turn note off.
 }
 
