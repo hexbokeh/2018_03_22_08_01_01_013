@@ -3,7 +3,7 @@ void calibrateValues()
   if (digitalRead(buttons[0]) == HIGH)
   {
     lightValue = analogRead(photoPin);
-    midway = (darkValue + lightValue) / 2;
+    setMidway();
     Serial.print("new light value =  ");
     Serial.println(lightValue);
   }
@@ -11,7 +11,7 @@ void calibrateValues()
   if (digitalRead(buttons[1]) == HIGH)
   {
     darkValue = analogRead(photoPin);
-    midway = (darkValue + lightValue) / 2;
+    setMidway();
     Serial.print("new dark value =  ");
     Serial.println(darkValue);
   }
@@ -26,7 +26,14 @@ void newCalibrate()
   {
     int temp = analogRead(photoPin);
     // light yields a higher analog value; darkness yields a lower analog value.
-    if (temp > lightValue) lightValue = temp; 
+    if (temp > lightValue) {lightValue = temp; setMidway();}
+    if (temp < darkValue) {darkValue = temp; setMidway();}
   }
+}
+
+// just to clear things up in the other functions.
+void setMidway()
+{
+  midway = (darkValue + lightValue) / 2;
 }
 
