@@ -16,7 +16,7 @@ int midway;  // threshold value.
 
 bool on;
 
-int ledSignal = 34;
+int ledSignal = A17; //34;
 
 int buttons[2] = {14, 15};
 bool buttonState[2];
@@ -30,7 +30,7 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
-//  pinMode(ledSignal, OUTPUT); // I'm going to do this via an analog write.
+  //  pinMode(ledSignal, OUTPUT); // I'm going to do this via an analog write.
   //digitalWrite(ledPin, HIGH);
   for (int i = 0; i < 2; i++)
   {
@@ -50,7 +50,8 @@ void loop()
   // calibrateValues();
   newCalibrate();
   checkCell();
-  delay(80);
+//  delay(80);
+  delay(10);
 }
 
 void checkCell()
@@ -58,7 +59,7 @@ void checkCell()
   lastCellVal = cellVal;
   cellVal = analogRead(photoPin);
 
-  currentNote = map(cellVal, darkValue, midway, 30, 60);
+  currentNote = map(cellVal, 0, 1023, 30, 60);
 
   if (cellVal > midway)
   {
@@ -72,23 +73,25 @@ void checkCell()
     analogWrite(ledSignal, 0);
   }
 
-//  if (cellVal < midway && lastCellVal > midway && on == false)
-//  else if ((cellVal > midway && lastCellVal < midway ) || (cellVal > midway && cellVal != lastCellVal))
+  //  if (cellVal < midway && lastCellVal > midway && on == false)
+  //  else if ((cellVal > midway && lastCellVal < midway ) || (cellVal > midway && cellVal != lastCellVal))
 
-  else if ((cellVal < midway && lastCellVal > midway ) || (cellVal < midway && (cellVal > lastCellVal+1 || cellVal < lastCellVal-1)))/// outside a tolerance range
+  else if ((cellVal < midway && lastCellVal > midway ) || (cellVal < midway && (cellVal > lastCellVal + 1 || cellVal < lastCellVal - 1))) /// outside a tolerance range
   {
     usbMIDI.sendNoteOn(currentNote, 127, 1);
-//    on = true;
+    //    on = true;
     Serial.println("On");
     Serial.print("MIDI Note: ");
     Serial.println(currentNote);
     //digitalWrite(ledSignal, HIGH);
-    analogWrite(ledSignal, map(cellVal, darkValue, lightValue, 100, 255));
-    
+    analogWrite(ledSignal, map(cellVal, 0, 1023, 50, 0));
+
+    //analogWrite(ledSignal, 2);
+
 
     // debug
     Serial.print("analog output: ");
-    Serial.println(map(cellVal, darkValue, lightValue, 100, 255));
+    Serial.println(map(cellVal, 0, 1023, 25, 0));
   }
 }
 
