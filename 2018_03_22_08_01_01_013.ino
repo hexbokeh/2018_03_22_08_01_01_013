@@ -59,7 +59,7 @@ void checkCell()
 
   currentNote = map(cellVal, darkValue, midway, 30, 60);
 
-  if (cellVal < midway)
+  if (cellVal > midway)
   {
     for (int i = 0; i < 128; i++)
     {
@@ -73,7 +73,7 @@ void checkCell()
 //  if (cellVal < midway && lastCellVal > midway && on == false)
 //  else if ((cellVal > midway && lastCellVal < midway ) || (cellVal > midway && cellVal != lastCellVal))
 
-  else if ((cellVal > midway && lastCellVal < midway ) || (cellVal > midway && (cellVal > lastCellVal+1 || cellVal<lastCellVal-1)))/// outside a tolerance range
+  else if ((cellVal < midway && lastCellVal > midway ) || (cellVal < midway && (cellVal > lastCellVal+1 || cellVal < lastCellVal-1)))/// outside a tolerance range
   {
     usbMIDI.sendNoteOn(currentNote, 127, 1);
 //    on = true;
