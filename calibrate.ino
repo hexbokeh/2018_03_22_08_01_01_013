@@ -26,8 +26,16 @@ void newCalibrate()
   {
     int temp = analogRead(photoPin);
     // light yields a higher analog value; darkness yields a lower analog value.
-    if (temp > lightValue) {lightValue = temp; setMidway();}
-    if (temp < darkValue) {darkValue = temp; setMidway();}
+    if (temp > lightValue)
+    {
+      lightValue = temp;
+      setMidway();
+    }
+    if (temp < darkValue)
+    {
+      darkValue = temp;
+      setMidway();
+    }
   }
 }
 

@@ -37,7 +37,7 @@ void setup()
     pinMode(buttons[i], INPUT);
   }
   pinMode(btn, INPUT);
-  midway = (darkValue + lightValue) / 2;
+  setMidway();
 }
 
 void loop()
@@ -47,7 +47,8 @@ void loop()
   checkBtn();
   Serial.print("read value = ");
   Serial.println(analogRead(photoPin));
-  calibrateValues();
+  // calibrateValues();
+  newCalibrate();
   checkCell();
   delay(10);
 }
