@@ -30,7 +30,7 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
-  pinMode(ledSignal, OUTPUT);
+//  pinMode(ledSignal, OUTPUT); // I'm going to do this via an analog write.
   //digitalWrite(ledPin, HIGH);
   for (int i = 0; i < 2; i++)
   {
@@ -50,7 +50,7 @@ void loop()
   // calibrateValues();
   newCalibrate();
   checkCell();
-  delay(10);
+  delay(80);
 }
 
 void checkCell()
@@ -68,7 +68,8 @@ void checkCell()
     }
     //on = false;
     Serial.println("Off");
-    digitalWrite(ledSignal, LOW);
+    //digitalWrite(ledSignal, LOW);
+    analogWrite(ledSignal, 0);
   }
 
 //  if (cellVal < midway && lastCellVal > midway && on == false)
@@ -81,7 +82,10 @@ void checkCell()
     Serial.println("On");
     Serial.print("MIDI Note: ");
     Serial.println(currentNote);
-    digitalWrite(ledSignal, HIGH);
+    //digitalWrite(ledSignal, HIGH);
+    analogWrite(ledSignal, map(cellVal, darkValue, lightValue, 100, 255));
+    Serial.print("analog output: ");
+    Serial.println(map(cellVal, darkValue, lightValue, 100, 255));
   }
 }
 
